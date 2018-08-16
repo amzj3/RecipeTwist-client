@@ -17,6 +17,7 @@ export class ErrorComponent implements OnInit {
       this.sub = this.route
       .queryParams
       .subscribe(params => {
+          console.log("Are you here?")
         // Defaults to 0 if no query param provided.
         const queryText = params['message'];
         if(queryText){
