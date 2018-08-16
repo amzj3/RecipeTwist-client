@@ -1,0 +1,23 @@
+<mat-toolbar color="primary"> 
+<button mat-button routerLink="." style="height:100%;font-size:120%">
+<mat-icon>restaurant</mat-icon>
+<span> RecipeTwist</span>
+</button>
+ <!-- This fills the remaining space of the current row -->
+<span class="fill-remaining-space"></span> 
+
+<button mat-raised-button routerLink="user-recipes-list">My Recipes</button>
+<span class="between_buttons"></span>
+<button mat-raised-button routerLink="recipes-list">Recipes</button>
+<span class="between_buttons"></span>
+<button mat-raised-button routerLink="about">About</button>
+</mat-toolbar>
+
+
+<br>
+
+<router-outlet></router-outlet>
+
+<br>
+
+<mat-toolbar style="height:80%"> <span class="center"></span><span style="font-size:80%">Your Recipe, Your Twist</span></mat-toolbar>

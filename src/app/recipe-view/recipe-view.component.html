@@ -1,0 +1,29 @@
+<div *ngIf="recipe">
+
+	<mat-toolbar>
+	<span>{{recipe.title}}</span>
+	<span class="fill-remaining-space"></span>
+	<button mat-raised-button color="primary" [routerLink]="['/recipe-edit', recipe.id]">
+	<mat-icon >edit</mat-icon>
+	<span>add your twist</span>
+	</button>
+	</mat-toolbar>
+
+	<br>
+
+	<mat-toolbar color="accent">Ingredients</mat-toolbar>
+	<br>
+	<mat-list> <mat-list-item
+		*ngFor="let ingredient of recipe.ingredients" style="color:black;">
+	<a>{{ingredient}}</a> </mat-list-item> </mat-list>
+	<br>
+
+	<mat-toolbar color="accent">Steps</mat-toolbar>
+	<br>
+	
+	<mat-list> <mat-list-item
+		*ngFor="let step of recipe.steps; let i=index" style="color:black;">
+	<a>{{(i+1)}}. {{step}}</a> </mat-list-item> </mat-list>
+	<br>
+
+</div>

@@ -1,0 +1,28 @@
+/* You can add global styles to this file, and also import other style files */
+@import url( 'https://fonts.googleapis.com/css?family=Roboto:400,700|Material+Icons');
+
+@import "~@angular/material/prebuilt-themes/pink-bluegrey.css";
+
+.fill-remaining-space {
+  /* This fills the remaining space, by using flexbox. 
+     Every toolbar row uses a flexbox row layout. */
+  flex: 1 1 auto;
+}
+
+.between_buttons {
+  /* This fills the remaining space, by using flexbox. 
+     Every toolbar row uses a flexbox row layout. */
+  flex: 0.1 0.1 auto;
+}
+.center {
+  
+  flex: 0.5 0.5 auto;
+}
+
+mat-grid-tile {
+  background: lightgrey;
+}
+
+body {
+    background-color: #dadada;
+}
