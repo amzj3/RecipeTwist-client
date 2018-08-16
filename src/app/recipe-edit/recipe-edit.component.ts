@@ -119,10 +119,8 @@ export class RecipeEditComponent implements OnInit {
       this.recipe.ingredients[id].edit = !this.recipe.ingredients[id].edit;
       if(this.recipe.ingredients[id].details != newIngredient){
           console.log("Adding the new ingredient", this.userRecipe.ingredients_edits)
-          if(newIngredient == ""){
-              newIngredient =" ";
-          }
-          this.userRecipe.ingredients_edits[id] = newIngredient;
+         
+          this.userRecipe.ingredients_edits[id] = newIngredient + " ";
           
       }else{
           console.log("deleting?")
@@ -133,10 +131,8 @@ export class RecipeEditComponent implements OnInit {
   stepEdit(id:number,newStep:string){
       this.recipe.steps[id].edit = !this.recipe.steps[id].edit;
       if(this.recipe.steps[id].details != newStep){
-          if(newStep == ""){
-              newStep =" ";
-          }
-          this.userRecipe.steps_edits[id] = newStep;
+
+          this.userRecipe.steps_edits[id] = newStep + " ";
           
       }else{
           delete this.userRecipe.steps_edits[id];
