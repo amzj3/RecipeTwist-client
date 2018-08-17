@@ -16,6 +16,6 @@ export class RecipeTwistErrorHandler implements ErrorHandler {
     // do something with the exception
       console.log("HERE IN ERROR HANDLER")
       console.log(error)
-      this.router.navigate(['/error'],{queryParams:{message:""+error}});
+      this.router.navigate(['/error'],{queryParams:{message:error}});
   }
 }

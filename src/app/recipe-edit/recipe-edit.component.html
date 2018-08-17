@@ -26,9 +26,9 @@
 
 <mat-list class="app-class"> 
 	<mat-list-item *ngFor="let ingredient of recipe.ingredients;let i=index" style="color:black;"> 
-		<span *ngIf="this.userRecipe.ingredients_edits[i]"> 
+		<div style="width:50%" *ngIf="this.userRecipe.ingredients_edits[i]"> 
 			<span style="text-decoration: line-through;">{{ingredient.details}} </span>&nbsp;
-		</span> 
+		</div> 
 		<mat-form-field style="width:50%"> 
 			
 			<textarea matInput matTextareaAutosize matAutosizeMaxRows=8 matAutosizeMinRows=1  [readonly]="!ingredient.edit" [(ngModel)]="input_ingredients[i]"></textarea>
@@ -50,9 +50,9 @@
 
 <mat-list class="app-class"> 
 	<mat-list-item  *ngFor="let step of recipe.steps;let i=index" style="color:black;">
-		<span *ngIf="this.userRecipe.steps_edits[i]"> 
+		<div style="width:50%" *ngIf="this.userRecipe.steps_edits[i]"> 
 			<span style="text-decoration: line-through;">{{step.details}} </span>&nbsp;
-		</span> 
+		</div> 
 		<mat-form-field style="width:50%">
 			<textarea matInput matTextareaAutosize matAutosizeMaxRows=8 matAutosizeMinRows=3  [readonly]="!step.edit" [(ngModel)]="input_steps[i]"></textarea>
 			<button mat-icon-button *ngIf="!step.edit" matSuffix (click)="step.edit = !step.edit">
