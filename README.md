@@ -1,5 +1,7 @@
 # RecipeTwistClient
 
+RecipeTwist is a recipe book application that allows in-place editing to change recipes to a user's liking. It allows searching by ingredient. 
+This project uses RecipeTwistServer to run the backend.
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8.
 
 ## Development server
