@@ -20,20 +20,10 @@ export class UserRecipesListComponent implements OnInit {
           private recipeService: UserRecipeService) { }
 
   ngOnInit() {
-      
-      //var queryText:String;
-      
-      
-      this.recipes = [];
-      
-     
-      this.getAll(); 
-         
-      
+      this.recipes = [];     
+      this.getAll();    
   }
-  
- 
- 
+
   getAll(){
       this.sub = this.route.params.subscribe(params => {
           this.recipeService.getAll().subscribe((recipes:any) =>{
@@ -41,12 +31,11 @@ export class UserRecipesListComponent implements OnInit {
               console.log(recipes)
               this.recipes = recipes._embedded.userRecipes;
               }else{
-                  console.log("Problem getting recipes")
+                  console.log("Can't get recipes")
               }
           });
      
       });
   }
-  
-  
+
 }
