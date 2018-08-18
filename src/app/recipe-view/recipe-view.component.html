@@ -13,7 +13,7 @@
 
 	<mat-toolbar color="accent">Ingredients</mat-toolbar>
 	<br>
-	<mat-list> 
+	<mat-list class="app-class"> 
 		<mat-list-item *ngFor="let ingredient of recipe.ingredients" style="color:black;">
 			<a>{{ingredient}}</a> 
 		</mat-list-item> 
@@ -22,7 +22,7 @@
 	<mat-toolbar color="accent">Steps</mat-toolbar>
 	<br>
 
-	<mat-list> 
+	<mat-list class="app-class"> 
 		<mat-list-item *ngFor="let step of recipe.steps; let i=index" style="color:black;">
 			<a>{{(i+1)}}. {{step}}</a> 
 		</mat-list-item> 

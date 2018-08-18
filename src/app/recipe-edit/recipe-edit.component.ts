@@ -52,9 +52,10 @@ export class RecipeEditComponent implements OnInit {
               if (recipe) {
                 this.recipe = recipe;
                 this.recipe.href = recipe._links.self.href;
-                this.userRecipe.title = this.recipe.title + ", with a twist!";
+                
                 if(this.userRecipe.original_recipe == null){
                     this.userRecipe.original_recipe = recipe.id;
+                    this.userRecipe.title = this.recipe.title + ", with a twist!";
                 }
 
                 for(let i in this.recipe.ingredients){
@@ -68,6 +69,7 @@ export class RecipeEditComponent implements OnInit {
                     this.input_steps[i] = {edit:false,details:this.recipe.steps[i]};
                 }
                 for(let i in this.userRecipe.steps_edits){
+                    console.log("adding step ",i)
                     this.input_steps[i] = {edit:false,details:this.userRecipe.steps_edits[i]};
                 }
                 
@@ -77,6 +79,9 @@ export class RecipeEditComponent implements OnInit {
             },error => this.router.navigate(['/error'],{queryParams:{message:"Recipe "+id+" not found!"}}));
           }
         });
+  }
+  delay(ms: number) {
+      return new Promise( resolve => setTimeout(resolve, ms) );
   }
   
   fetchUserRecipe(original_recipe_id){
@@ -102,31 +107,46 @@ export class RecipeEditComponent implements OnInit {
           delete this.userRecipe.ingredients_edits[id];
           delete this.input_ingredients[id];
       }
-     
   }
   
   addNewIngredient(){
-      console.log(this.input_new_ingredient);
       let i = Object.keys(this.input_ingredients).length;
+      
       this.userRecipe.ingredients_edits[i] = this.input_new_ingredient.details + " ";
       this.input_ingredients[i] = {edit:false,details:this.input_new_ingredient.details};
       this.input_new_ingredient = {edit:false,details:''}   
   }
   
   keys(dict){
-      console.log("ie ",this.userRecipe.ingredients_edits);
-      console.log("keys ",Object.keys(dict));
-      console.log(this.input_ingredients);
-      return Object.keys(dict);
+      let keys_array = Object.keys(dict);
+      return keys_array.sort((a, b) => parseFloat(a) < parseFloat(b) ? -1 : parseFloat(a) > parseFloat(b) ? 1 : 0);
   }
-  stepEdit(id:number,newStep:string){
+  stepEdit(id:string,newStep:string){
       this.input_steps[id].edit = !this.input_steps[id].edit;
       if(this.recipe.steps[id] != newStep){
+          console.log(this.recipe.steps[id]);
           this.userRecipe.steps_edits[id] = newStep + " ";        
       }else{
           delete this.userRecipe.steps_edits[id];
+      }
+      if(!this.recipe.steps[id] && newStep == ""){
+          delete this.userRecipe.steps_edits[id]; 
+          delete this.input_steps[id];
       }   
   }
+  
+  addNewStep(position, first = false){
+      let new_pos; 
+      if(first){
+          let first_key = this.keys(this.input_steps)[0];
+          new_pos = parseFloat(first_key) - 0.1;
+      }else{
+         new_pos = parseFloat(position)+0.1; 
+      }
+      this.input_steps[new_pos] = {edit:true,details:""};
+      this.userRecipe[new_pos] = "";
+  }
+  
   
   doneEditing(){
       this.userRecipeService.save(this.userRecipe).subscribe(result => {
