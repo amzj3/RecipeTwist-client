@@ -13,6 +13,7 @@ export class RecipeTwistErrorHandler implements ErrorHandler {
     };
 
     handleError( error ) {
+        console.log(error);
         this.router.navigate( ['/error'], { queryParams: { message: error } } );
     }
 }

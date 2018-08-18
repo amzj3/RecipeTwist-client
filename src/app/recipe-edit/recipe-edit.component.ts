@@ -23,9 +23,9 @@ export class RecipeEditComponent implements OnInit {
   input_ingredients = {};
   input_steps = {};
   input_new_ingredient = {edit:false,details:''};
-  
+  allLoaded = false;
   sub:Subscription;
-  recipe:any = {ingredients:[]}
+  recipe:any = {ingredients:[],steps:[]}
   constructor(private route: ActivatedRoute,
           private router: Router,
           private recipeService: RecipeService,
@@ -37,60 +37,76 @@ export class RecipeEditComponent implements OnInit {
         // Defaults to 0 if no query param provided.
         queryText = params['original_recipe'];
       });
+      
       this.sub = this.route.params.subscribe(params => {
           let id;
-          let original_recipe;
+          let user_recipe;
           if(queryText){
              id = queryText;
-             original_recipe = params['id'];
-             this.fetchUserRecipe(original_recipe);
+             user_recipe = params['id'];
+             this.fetchUserRecipe(user_recipe);
           }else{
               id = params['id'];
           }
+          
           if (id) {
-            this.recipeService.get(id).subscribe((recipe: any) => {
-              if (recipe) {
-                this.recipe = recipe;
-                this.recipe.href = recipe._links.self.href;
-                
-                if(this.userRecipe.original_recipe == null){
-                    this.userRecipe.original_recipe = recipe.id;
-                    this.userRecipe.title = this.recipe.title + ", with a twist!";
-                }
-
-                for(let i in this.recipe.ingredients){
-                        this.input_ingredients[i] = {edit:false,details:this.recipe.ingredients[i]};
-                }
-                for(let i in this.userRecipe.ingredients_edits){
-                    this.input_ingredients[i] = {edit:false,details:this.userRecipe.ingredients_edits[i]};
-                }
-               
-                for(let i in this.recipe.steps){                        
-                    this.input_steps[i] = {edit:false,details:this.recipe.steps[i]};
-                }
-                for(let i in this.userRecipe.steps_edits){
-                    console.log("adding step ",i)
-                    this.input_steps[i] = {edit:false,details:this.userRecipe.steps_edits[i]};
-                }
-                
-              } else {
-                  console.log("Recipe not found")
-              }
-            },error => this.router.navigate(['/error'],{queryParams:{message:"Recipe "+id+" not found!"}}));
+            this.fetchRecipes(id,user_recipe);
           }
+          
         });
   }
   delay(ms: number) {
       return new Promise( resolve => setTimeout(resolve, ms) );
   }
   
-  fetchUserRecipe(original_recipe_id){
-      this.userRecipeService.get(original_recipe_id).subscribe((recipe: any) => {
-          if(recipe){
-              this.userRecipe = recipe;
-             
+  setVariables(){
+      if(this.userRecipe.original_recipe == null){
+          this.userRecipe.original_recipe = this.recipe.id;
+          this.userRecipe.title = this.recipe.title + ", with a twist!";
+      }
+      console.log("input: ",this.input_ingredients);
+      for(let i in this.recipe.ingredients){
+              this.input_ingredients[i] = {edit:false,details:this.recipe.ingredients[i]};
+      }
+      for(let i in this.userRecipe.ingredients_edits){
+          this.input_ingredients[i] = {edit:false,details:this.userRecipe.ingredients_edits[i]};
+      }
+     
+      for(let i in this.recipe.steps){                        
+          this.input_steps[i] = {edit:false,details:this.recipe.steps[i]};
+      }
+      console.log("input: ",this.userRecipe.steps_edits);
+      console.log("input: ",this.input_steps);
+      for(let i in this.userRecipe.steps_edits){
+          console.log("adding step ",i)
+          this.input_steps[i] = {edit:false,details:this.userRecipe.steps_edits[i]};
+      }
+      this.allLoaded = true;
+  }
+  
+  fetchRecipes(id,user_recipe){
+      this.recipeService.get(id).subscribe((recipe: any) => {
+          if (recipe) {
+            this.recipe = recipe;
+            if(user_recipe){
+               this.fetchUserRecipe(user_recipe); 
+            }else{
+                this.setVariables();
+            }
+          } else {
+              console.log("Recipe not found")
           }
-      })
+        },error => this.router.navigate(['/error'],{queryParams:{message:"Recipe "+id+" not found!"}}));
+  }
+  
+  fetchUserRecipe(user_recipe_id){
+      this.userRecipeService.get(user_recipe_id).subscribe((recipe: any) => {
+          if(recipe){
+             this.userRecipe = recipe;
+             console.log("user_recipe " ,this.userRecipe);
+             this.setVariables();
+          }
+      },error => this.router.navigate(['/error'],{queryParams:{message:"Recipe "+user_recipe_id+" not found!"}}));
   }
   
   
