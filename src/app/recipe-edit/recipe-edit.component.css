@@ -1,7 +1,11 @@
 .app-class .mat-list-item {
-  height: auto;
+	height: auto;
 }
 
 .app-class {
-  height: auto;
+	height: auto;
+}
+
+.mat-list-item{
+	color:black;
 }
