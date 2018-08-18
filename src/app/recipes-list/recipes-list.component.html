@@ -2,11 +2,12 @@
 	No recipes found!
 </span>
 <br>
-<mat-list> 
-	<mat-list-item *ngFor="let recipe of recipes" style="color:black;">
-		<a [routerLink]="[link, recipe.id]" [queryParams]="{'original_recipe': recipe.original_recipe}">
+<mat-nav-list> 
+	<mat-list-item *ngFor="let recipe of recipes" style="color:black;" [routerLink]="[link, recipe.id]" [queryParams]="{'original_recipe': recipe.original_recipe}">
+		<a matLine>
 			{{recipe.title}}
 		</a> 
-	</mat-list-item> 
-</mat-list>
+	</mat-list-item>
+	
+</mat-nav-list>
 <br>
