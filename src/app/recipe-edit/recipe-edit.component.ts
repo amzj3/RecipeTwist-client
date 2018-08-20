@@ -31,13 +31,7 @@ export class RecipeEditComponent implements OnInit {
           private recipeService: RecipeService,
           private userRecipeService: UserRecipeService) { }
 
-  ngOnInit() {
-      
-      //this.sub = this.route.queryParams.subscribe(params => {
-        // Defaults to 0 if no query param provided.
-        //queryText = params['original_recipe'];
-      //});
-      
+  ngOnInit() {    
       this.sub = this.route.queryParams.subscribe(params => {
           let id;
           let user_recipe;
