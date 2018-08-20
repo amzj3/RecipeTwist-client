@@ -31,12 +31,13 @@ export class RecipeEditComponent implements OnInit {
           private recipeService: RecipeService,
           private userRecipeService: UserRecipeService) { }
 
-  ngOnInit() {    
+  ngOnInit() {
+      
       this.sub = this.route.queryParams.subscribe(params => {
-          let id;
-          let user_recipe;
-          user_recipe = params['user_recipe'];
-          id = params['id'];
+          let id  = params['id'];
+          let user_recipe = params['user_recipe'];
+          user_recipe 
+          
           if (id) {    
             this.fetchRecipes(id,user_recipe);
           }
@@ -97,16 +98,15 @@ export class RecipeEditComponent implements OnInit {
   }
   
   
-  ingredientEdit(id:number,newIngredient:string){   
-      this.input_ingredients[id].edit = ! this.input_ingredients[id].edit;
-      if(this.recipe.ingredients[id] != newIngredient){
-          this.userRecipe.ingredients_edits[id] = newIngredient + " ";   
-          console.log(this.userRecipe.ingredients_edits)
+  ingredientEdit(id:number){   
+      this.input_ingredients[id].edit = false;
+      if(this.recipe.ingredients[id] != this.input_ingredients[id].details){
+          this.userRecipe.ingredients_edits[id] = this.input_ingredients[id].details + " ";   
       }else{
           delete this.userRecipe.ingredients_edits[id];
       }
-      
-      if(!this.recipe.ingredients[id] && newIngredient == ""){
+    
+      if(!this.recipe.ingredients[id] && this.input_ingredients[id].details == ""){
           delete this.userRecipe.ingredients_edits[id];
           delete this.input_ingredients[id];
       }
@@ -114,7 +114,6 @@ export class RecipeEditComponent implements OnInit {
   
   addNewIngredient(){
       let i = Object.keys(this.input_ingredients).length;
-      
       this.userRecipe.ingredients_edits[i] = this.input_new_ingredient.details + " ";
       this.input_ingredients[i] = {edit:false,details:this.input_new_ingredient.details};
       this.input_new_ingredient = {edit:false,details:''}   
@@ -124,15 +123,14 @@ export class RecipeEditComponent implements OnInit {
       let keys_array = Object.keys(dict);
       return keys_array.sort((a, b) => parseFloat(a) < parseFloat(b) ? -1 : parseFloat(a) > parseFloat(b) ? 1 : 0);
   }
-  stepEdit(id:string,newStep:string){
-      this.input_steps[id].edit = !this.input_steps[id].edit;
-      if(this.recipe.steps[id] != newStep){
-          console.log(this.recipe.steps[id]);
-          this.userRecipe.steps_edits[id] = newStep + " ";        
+  stepEdit(id:string){
+      this.input_steps[id].edit = false;
+      if(this.recipe.steps[id] != this.input_steps[id].details){
+          this.userRecipe.steps_edits[id] = this.input_steps[id].details + " ";        
       }else{
           delete this.userRecipe.steps_edits[id];
       }
-      if(!this.recipe.steps[id] && newStep == ""){
+      if(!this.recipe.steps[id] && this.input_steps[id].details == ""){
           delete this.userRecipe.steps_edits[id]; 
           delete this.input_steps[id];
       }   
@@ -150,8 +148,24 @@ export class RecipeEditComponent implements OnInit {
       this.userRecipe[new_pos] = "";
   }
   
+  openUnsavedDialog():void{
+      
+  }
   
   doneEditing(){
+      //saving, in case the user forgot to press the check
+      let isUnsaved = this.title_edit;
+      for(let i in this.input_ingredients){
+          if(this.input_ingredients[i].edit){
+              this.ingredientEdit(parseInt(i));
+          }
+      }
+      for(let i in this.input_steps){
+          if(this.input_steps[i].edit){
+              this.stepEdit(i);
+          }
+      }
+      
       this.userRecipeService.save(this.userRecipe).subscribe(result => {
           this.gotoUserRecipes(); 
         }, error => console.error(error))

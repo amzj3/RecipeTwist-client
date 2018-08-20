@@ -34,10 +34,10 @@
 			
 			<mat-icon *ngIf="!this.recipe.ingredients[i]" matPrefix>add</mat-icon>
 			
-			<button mat-icon-button *ngIf="!input_ingredients[i].edit" matSuffix (click)="input_ingredients[i].edit = !input_ingredients[i].edit">
+			<button mat-icon-button *ngIf="!input_ingredients[i].edit" matSuffix (click)="input_ingredients[i].edit = true">
 				<mat-icon>edit</mat-icon>
 			</button>
-			<button mat-icon-button *ngIf="input_ingredients[i].edit" matSuffix (click)="ingredientEdit(i,input_ingredients[i].details)">
+			<button mat-icon-button *ngIf="input_ingredients[i].edit" matSuffix (click)="ingredientEdit(i)">
 				<mat-icon>done</mat-icon>
 			</button>
 		</mat-form-field>
@@ -79,10 +79,10 @@
 			<mat-icon *ngIf="!this.recipe.steps[i]" matPrefix>add</mat-icon>
 		
 			<textarea matInput matTextareaAutosize matAutosizeMaxRows=8 matAutosizeMinRows=3  [readonly]="!input_steps[i].edit" [(ngModel)]="input_steps[i].details"></textarea>
-			<button mat-icon-button *ngIf="!input_steps[i].edit" matSuffix (click)="input_steps[i].edit = !input_steps[i].edit">
+			<button mat-icon-button *ngIf="!input_steps[i].edit" matSuffix (click)="input_steps[i].edit = true">
 				<mat-icon>edit</mat-icon>
 			</button>
-			<button mat-icon-button *ngIf="input_steps[i].edit" matSuffix (click)="stepEdit(i,input_steps[i].details)">
+			<button mat-icon-button *ngIf="input_steps[i].edit" matSuffix (click)="stepEdit(i)">
 				<mat-icon>done</mat-icon>
 			</button>
 			<button mat-icon-button matSuffix color="primary" (click)="addNewStep(i)">
