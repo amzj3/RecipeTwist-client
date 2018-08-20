@@ -36,10 +36,15 @@ export class RecipeEditComponent implements OnInit {
       this.sub = this.route.queryParams.subscribe(params => {
           let id  = params['id'];
           let user_recipe = params['user_recipe'];
-          user_recipe 
           
           if (id) {    
             this.fetchRecipes(id,user_recipe);
+          }else{
+              if(user_recipe){
+                  this.fetchUserRecipe(user_recipe);
+              }else{
+                  this.allLoaded = true;
+              }
           }
         });
   }
@@ -48,7 +53,7 @@ export class RecipeEditComponent implements OnInit {
   }
   
   setVariables(){
-      if(this.userRecipe.original_recipe == null){
+      if(this.userRecipe.original_recipe == null && !this.recipe){
           this.userRecipe.original_recipe = this.recipe.id;
           this.userRecipe.title = this.recipe.title + ", with a twist!";
       }
@@ -154,7 +159,6 @@ export class RecipeEditComponent implements OnInit {
   
   doneEditing(){
       //saving, in case the user forgot to press the check
-      let isUnsaved = this.title_edit;
       for(let i in this.input_ingredients){
           if(this.input_ingredients[i].edit){
               this.ingredientEdit(parseInt(i));

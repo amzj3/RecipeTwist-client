@@ -1,3 +1,10 @@
+<span>
+	
+	<button mat-raised-button style="float:right;" color="primary" [routerLink]="['/recipe-edit']" >
+		<mat-icon>add</mat-icon>
+		<span>New Recipe</span>
+	</button>
+</span>
 <span *ngIf="!recipes || recipes.length < 1">
 	<br>
 	No recipes found!
