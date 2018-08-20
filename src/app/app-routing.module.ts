@@ -14,7 +14,7 @@ const routes:Routes = [
    {path:'main',component:MainComponent},
    {path:'recipe-view/:id',component:RecipeViewComponent},
    {path:'recipes-list',component:RecipesListComponent},
-   {path:'recipe-edit/:id',component: RecipeEditComponent},
+   {path:'recipe-edit',component: RecipeEditComponent},
    {path:'about',component: AboutComponent},
    {path:'user-recipes-list',component:UserRecipesListComponent},
    {path:'error',component:ErrorComponent}

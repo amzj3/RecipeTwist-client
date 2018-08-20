@@ -1,9 +1,10 @@
 <span *ngIf="!recipes || recipes.length < 1">
+	<br>
 	No recipes found!
 </span>
 <br>
 <mat-nav-list> 
-	<mat-list-item *ngFor="let recipe of recipes" style="color:black;" [routerLink]="[link, recipe.id]" [queryParams]="{'original_recipe': recipe.original_recipe}">
+	<mat-list-item *ngFor="let recipe of recipes" style="color:black;" (click)='viewRecipe(recipe)'>
 		<a matLine>
 			{{recipe.title}}
 		</a> 

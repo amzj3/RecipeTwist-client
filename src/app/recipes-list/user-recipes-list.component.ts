@@ -11,13 +11,13 @@ import { UserRecipeService } from "src/app/shared/user-recipe/user-recipe.servic
   styleUrls: ['./recipes-list.component.css']
 })
 export class UserRecipesListComponent implements OnInit {
-  link="/recipe-edit"
-  
+  link="/recipe-edit";
   recipes:any={};
   
   sub:Subscription;
   constructor(private route: ActivatedRoute,
-          private recipeService: UserRecipeService) { }
+          private recipeService: UserRecipeService,
+          private router:Router) { }
 
   ngOnInit() {
       this.recipes = [];     
@@ -36,6 +36,10 @@ export class UserRecipesListComponent implements OnInit {
           });
      
       });
+  }
+  
+  viewRecipe(recipe){
+      this.router.navigate( [this.link], { queryParams: { id: recipe.original_recipe,user_recipe:recipe.id}});
   }
 
 }

@@ -17,7 +17,8 @@ export class RecipesListComponent implements OnInit {
 
     sub: Subscription;
     constructor( private route: ActivatedRoute,
-        private recipeService: RecipeService ) { }
+        private recipeService: RecipeService,
+        private router:Router) { }
 
     ngOnInit() {
         this.sub = this.route.queryParams.subscribe( params => {
@@ -69,6 +70,10 @@ export class RecipesListComponent implements OnInit {
                 });
             }
         });
+    }
+    
+    viewRecipe(recipe){
+        this.router.navigate([this.link,recipe.id]);
     }
 
 }
